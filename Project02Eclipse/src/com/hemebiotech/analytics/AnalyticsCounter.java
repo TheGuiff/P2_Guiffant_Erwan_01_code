@@ -21,9 +21,13 @@ public class AnalyticsCounter {
 		SortSymptoms sortedSymptoms = new SortSymptoms();
 		listSymptomsOut = sortedSymptoms.sortAndCountSymptoms(INPUT_FILE);
 
-		// Generate output file
-		WriteSymptomData fichierOut = new WriteSymptomData(OUTPUT_FILE);
-		fichierOut.WriteSymptoms(listSymptomsOut);
+		if (listSymptomsOut != null) {
+
+			// Generate output file
+			ISymptomWriter fichierOut = new WriteSymptomData(OUTPUT_FILE);
+			fichierOut.writeSymptoms(listSymptomsOut);
+
+		}
 
 	};
 

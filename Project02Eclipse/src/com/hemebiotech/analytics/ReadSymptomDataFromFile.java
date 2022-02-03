@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Simple brute force implementation
@@ -27,33 +28,35 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	}
 	
 	@Override
-	public ArrayList<String> GetSymptoms() {
+	public List<String> getSymptoms() {
 
-		ArrayList<String> result = new ArrayList<String>();
+		if (filepath == null) {
+			return null;
+		}
+
+		List<String> result = new ArrayList<String>();
 		BufferedReader reader = null;
 		
-		if (filepath != null) {
-			try {
-				reader = new BufferedReader(new FileReader(filepath));
-				String line = reader.readLine();
+		try {
+			reader = new BufferedReader(new FileReader(filepath));
+			String line = reader.readLine();
 				
-				while (line != null) {
-					result.add(line);
-					line = reader.readLine();
-				}
-			} catch (FileNotFoundException e) {
-				System.out.println(MESSAGE_FILE_NOT_FOUND);
-				System.exit(-1);
-			} catch (IOException e) {
-				System.out.println(MESSAGE_OTHER_IO_ERROR);
-				System.exit(-1);
-			} finally {
-				if (reader != null) {
-					try {
-						reader.close();
-					} catch (IOException f) {
-						System.out.println(MESSAGE_FILE_CLOSE_ERROR);
-					}
+			while (line != null) {
+				result.add(line);
+				line = reader.readLine();
+			}
+		} catch (FileNotFoundException e) {
+			System.err.println(MESSAGE_FILE_NOT_FOUND);
+			return null;
+		} catch (IOException e) {
+			System.err.println(MESSAGE_OTHER_IO_ERROR);
+			return null;
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException f) {
+					System.err.println(MESSAGE_FILE_CLOSE_ERROR);
 				}
 			}
 		}
