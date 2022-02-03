@@ -9,10 +9,6 @@ import java.util.TreeMap;
  * @author S076562
  * @version 1.0
  * 
- * @param filepath to a file of symptoms
- * @return a map of sorted symptoms from the input file with the number of
- *         occurs of each
- *
  */
 
 public class SortSymptoms {
@@ -22,8 +18,12 @@ public class SortSymptoms {
 		Map<String, Integer> result = new TreeMap<String, Integer>();
 		List<String> listSymptomsIn;
 
-		ReadSymptomDataFromFile fichierLu = new ReadSymptomDataFromFile(filepath);
-		listSymptomsIn = fichierLu.GetSymptoms();
+		ISymptomReader fichierLu = new ReadSymptomDataFromFile(filepath);
+
+		listSymptomsIn = fichierLu.getSymptoms();
+		if (listSymptomsIn == null) {
+			return null;
+		}
 
 		for (String symptom : listSymptomsIn) {
 			if (result.containsKey(symptom)) {

@@ -11,17 +11,12 @@ public class WriteSymptomData implements ISymptomWriter {
 
 	private String filepath;
 
-	/**
-	 * 
-	 * @param filepath a full or partial path to file to write with type of symptom
-	 *                 strings and number of occurrence in it, one per line
-	 */
 	public WriteSymptomData(String filepath) {
 		this.filepath = filepath;
 	}
 
 	@Override
-	public void WriteSymptoms(Map<String, Integer> listSymptoms) {
+	public void writeSymptoms(Map<String, Integer> listSymptoms) {
 
 		FileWriter writer = null;
 
@@ -32,14 +27,13 @@ public class WriteSymptomData implements ISymptomWriter {
 				}
 			writer.close();
 		} catch (IOException e) {
-			System.out.println(MESSAGE_IO_ERROR);
-			System.exit(-1);
+			System.err.println(MESSAGE_IO_ERROR);
 		} finally {
 			if (writer != null) {
 				try {
 					writer.close();
 				} catch (IOException f) {
-					System.out.println(MESSAGE_FILE_CLOSE_ERROR);
+					System.err.println(MESSAGE_FILE_CLOSE_ERROR);
 				}
 			}
 		}
